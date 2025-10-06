@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Il Forno - Parque 93 & Cartagena</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #2c3e50;
+            background: white;
+            padding: 30px 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #e74c3c;
+        }
+        
+        .header h1 {
+            color: #e74c3c;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .location-section {
+            margin-bottom: 35px;
+            page-break-inside: avoid;
+        }
+        
+        .location-header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .location-header h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .location-header .address {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .findings {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .findings h3 {
+            color: #e74c3c;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .finding-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .finding-item::before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .finding-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .finding-item p {
+            color: #5a6c7d;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e74c3c;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .opportunity {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .opportunity h3 {
+            color: #28a745;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .opportunity .revenue {
+            font-size: 28px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        
+        .opportunity ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .opportunity li {
+            margin-bottom: 8px;
+            color: #155724;
+            font-size: 14px;
+        }
+        
+        .keywords-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        
+        .keywords-table th {
+            background: #34495e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .keywords-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .keywords-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-missing {
+            background: #fee;
+            color: #c0392b;
+        }
+        
+        .status-low {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            font-size: 11px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .highlight-box strong {
+            color: #856404;
+        }
+
+        .critical-box {
+            background: #fee;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .critical-box strong {
+            color: #c0392b;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            
+            .location-section:not(:last-of-type) {
+                page-break-after: always;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Análisis Preliminar - Il Forno</h1>
+        <p class="subtitle">Análisis de visibilidad en Google Maps • 2 ubicaciones estratégicas</p>
+        <p class="subtitle">Preparado para: Mónica Llanos | Fecha: Octubre 2025</p>
+    </div>
+
+    <div class="location-section">
+        <div class="location-header">
+            <h2>📍 Il Forno Parque 93</h2>
+            <p class="address">Calle 93 #13-65, Bogotá, Colombia</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">4.3★</span>
+                <span class="metric-label">Rating Google</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">15+</span>
+                <span class="metric-label">Posición Maps</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">~1,280</span>
+                <span class="metric-label">Búsquedas/mes</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">0</span>
+                <span class="metric-label">Clientes/mes actual</span>
+            </div>
+        </div>
+
+        <div class="findings">
+            <h3>Hallazgos Críticos</h3>
+            
+            <div class="finding-item">
+                <strong>Sin URL dedicada</strong>
+                <p>La ficha de Google Business Profile no tiene una página web específica para esta ubicación. Todas las sedes apuntan a ilforno.co sin diferenciación, lo que impide que Google establezca relevancia local clara.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>NAP inconsistente</strong>
+                <p>El nombre, dirección y teléfono no están estandarizados entre Google Maps, el sitio web y directorios. Detectamos 3 variaciones de la dirección en diferentes plataformas.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Invisible en búsquedas turísticas</strong>
+                <p>No aparece para búsquedas en inglés como "italian restaurant near me" a pesar de estar en zona con alta afluencia de extranjeros (Parque 93).</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Completamente invisible en Map Pack</strong>
+                <p>Para keywords principales como "restaurante italiano parque 93" (90 búsquedas/mes), Il Forno NO aparece en los primeros 15 resultados. La competencia local está capturando 100% del tráfico orgánico.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Tiempos de espera excesivos</strong>
+                <p>Patrón recurrente en reseñas: "Esperamos 1 hora", "45 minutos para la comida", "2 horas sin que lleguen los platos". Esto afecta directamente la calificación y la retención de clientes.</p>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <strong>🚨 Gestión de reputación inexistente:</strong> Il Forno NO responde reseñas negativas. Clientes reportan servicio lento, comida fría, y mala atención sin recibir respuesta del restaurante. Esto impacta severamente el rating y la percepción de marca.
+        </div>
+
+        <table class="keywords-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Vol/mes</th>
+                    <th>Posición actual</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>restaurante italiano parque 93</td>
+                    <td>90</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Invisible</span></td>
+                </tr>
+                <tr>
+                    <td>pizzeria napolitana cerca de mi</td>
+                    <td>800*</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Invisible</span></td>
+                </tr>
+                <tr>
+                    <td>restaurante italiano zona g</td>
+                    <td>320</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Invisible</span></td>
+                </tr>
+                <tr>
+                    <td>restaurante de pastas bogotá chapinero</td>
+                    <td>70</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Invisible</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 11px; color: #7f8c8d; margin-top: -15px;">*Volumen geo-localizado para Chapinero/Parque 93</p>
+
+        <div class="opportunity">
+            <h3>💰 Oportunidad de Revenue</h3>
+            <p><strong>Proyección al optimizar al Top 3:</strong></p>
+            <div class="revenue">+$1.700.000 COP/mes</div>
+            <p style="font-size: 13px; color: #155724; margin-top: 10px;">
+                <strong>Cálculo:</strong> 1,280 búsquedas × 28% CTR × 6% conversión × $85K ticket = +20 clientes/mes
+            </p>
+            <ul>
+                <li>Crear URL dedicada por ubicación: ilforno.co/parque-93/ (o subdominio si no es técnicamente viable)</li>
+                <li>Optimizar ficha GBP con NAP consistente</li>
+                <li>Añadir versión en inglés para búsquedas turísticas</li>
+                <li>Implementar sistema de respuesta a reseñas (prioridad crítica)</li>
+                <li>Estrategia proactiva de reseñas post-visita</li>
+                <li>Quick win: Completar atributos faltantes en Google (terraza, wifi, reservas online)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="location-section">
+        <div class="location-header">
+            <h2>📍 Il Forno Cartagena Mall Plaza</h2>
+            <p class="address">Avenida Pedro De Heredia centro 12, Cartagena, Colombia</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">4.4★</span>
+                <span class="metric-label">Rating Google (732 opiniones)</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">No visible</span>
+                <span class="metric-label">Posición Maps</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">~890</span>
+                <span class="metric-label">Búsquedas/mes</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">0</span>
+                <span class="metric-label">Turistas captados</span>
+            </div>
+        </div>
+
+        <div class="findings">
+            <h3>Hallazgos Críticos</h3>
+            
+            <div class="finding-item">
+                <strong>Oportunidad turística desaprovechada</strong>
+                <p>Cartagena recibe ~370 búsquedas/mes en inglés de "italian restaurant". Il Forno NO aparece porque el sitio está 100% en español. Los turistas gastan 70% más que locales.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Competencia con dificultad MEDIUM ganando tráfico</strong>
+                <p>Para "italian restaurant cartagena" (140 búsquedas/mes, dificultad MEDIUM según SEMrush), restaurantes menos conocidos están posicionados en Top 3 porque tienen contenido bilingüe.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Actividad inconsistente de reseñas</strong>
+                <p>Última reseña relevante hace 1 semana. En "más recientes" hay actividad de hace 21 horas, pero Il Forno NO responde ninguna reseña. Google prioriza negocios que interactúan con sus clientes.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Reseñas negativas sin gestión</strong>
+                <p>Múltiples quejas sobre servicio lento, personal desatento, comida fría - todas sin respuesta. Las calificaciones bajas quedan expuestas sin ninguna estrategia de recuperación del cliente.</p>
+            </div>
+
+            <div class="finding-item">
+                <strong>Problemas operativos recurrentes</strong>
+                <p>Patrón en reseñas: "espera de más de 14 minutos para carta", "tiempos de espera bastante altos", "servicio del personal terrible", "calor insoportable (sin aire acondicionado)".</p>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <strong>🚨 Crisis de gestión de reputación:</strong> Il Forno Cartagena tiene 0% de tasa de respuesta a reseñas. Clientes con experiencias negativas no reciben seguimiento. Esto es especialmente crítico en una ciudad turística donde la reputación online es decisiva.
+        </div>
+
+        <div class="highlight-box">
+            <strong>Dato crítico:</strong> El 90% de turistas en Cartagena consulta Google antes de elegir restaurante. Perder visibilidad en búsquedas en inglés + no responder reseñas = perder el mercado de mayor gasto promedio.
+        </div>
+
+        <table class="keywords-table">
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Vol/mes</th>
+                    <th>Posición actual</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>italian restaurant cartagena</td>
+                    <td>140</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Sin contenido EN</span></td>
+                </tr>
+                <tr>
+                    <td>italian restaurant near me</td>
+                    <td>200*</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Sin contenido EN</span></td>
+                </tr>
+                <tr>
+                    <td>best italian restaurant cartagena</td>
+                    <td>30</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Sin contenido EN</span></td>
+                </tr>
+                <tr>
+                    <td>restaurante italiano cartagena</td>
+                    <td>720</td>
+                    <td>No visible (15+)</td>
+                    <td><span class="status-badge status-missing">Invisible</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 11px; color: #7f8c8d; margin-top: -15px;">*Volumen geo-localizado para zona turística Cartagena</p>
+
+        <div class="opportunity">
+            <h3>💰 Oportunidad de Revenue - Mercado Turístico</h3>
+            <p><strong>Solo búsquedas en inglés (sin contar español):</strong></p>
+            <div class="revenue">+$1.200.000 COP/mes</div>
+            <p style="font-size: 13px; color: #155724; margin-top: 10px;">
+                <strong>Cálculo:</strong> 370 búsquedas EN × 28% CTR × 8% conversión × $150K ticket turista = +8 clientes/mes
+            </p>
+            <p style="font-size: 13px; color: #155724; margin-top: 10px; margin-bottom: 10px;">
+                <strong>+ Búsquedas en español optimizadas:</strong> +$1.000.000 COP/mes adicionales
+            </p>
+            <p style="font-size: 14px; color: #155724; font-weight: bold;">
+                Total potencial: $2.200.000 COP/mes para esta única ubicación
+            </p>
+            <ul>
+                <li>Crear URL dedicada bilingüe: ilforno.co/cartagena-mall-plaza/ (ES/EN) - o subdominio si no es viable</li>
+                <li>Traducir ficha GBP completamente al inglés</li>
+                <li>URGENTE: Implementar sistema de respuesta a reseñas (0% de respuestas actualmente)</li>
+                <li>Estrategia de recuperación de clientes insatisfechos</li>
+                <li>Sistema automatizado de reseñas post-visita</li>
+                <li>Quick win: Añadir "English menu available" en descripción</li>
+            </ul>
+        </div>
+
+        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #3498db;">
+            <p style="font-size: 13px; color: #2c3e50; margin: 0;">
+                <strong>Insight clave:</strong> Cartagena tiene el mayor potencial de crecimiento inmediato. Con optimización bilingüe + sistema de gestión de reseñas + Google Ads para turistas, esta ubicación podría duplicar su tráfico en 60 días.
+            </p>
+        </div>
+    </div>
+
+    <div class="location-section">
+        <div class="location-header" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
+            <h2>📊 Resumen Ejecutivo - 2 Ubicaciones</h2>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value" style="color: #2c3e50;">$3.9M</span>
+                <span class="metric-label">Revenue adicional/mes</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value" style="color: #2c3e50;">+28</span>
+                <span class="metric-label">Clientes nuevos/mes</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value" style="color: #2c3e50;">60-90</span>
+                <span class="metric-label">Días para resultados</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value" style="color: #2c3e50;">5.8:1</span>
+                <span class="metric-label">ROI proyectado</span>
+            </div>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; margin-top: 30px;">
+            <h3 style="color: #2c3e50; margin-bottom: 15px; font-size: 18px;">Patrón encontrado en ambas ubicaciones:</h3>
+            <ol style="margin-left: 20px; line-height: 2;">
+                <li><strong>Sin diferenciación local:</strong> Todas las sedes comparten la misma URL genérica</li>
+                <li><strong>NAP inconsistente:</strong> Información fragmentada entre Google, web y directorios</li>
+                <li><strong>Contenido monolingüe:</strong> Pierden 100% del mercado turístico en ciudades clave</li>
+                <li><strong>Invisibilidad total:</strong> Posición 15+ cuando solo Top 3 genera tráfico real</li>
+                <li><strong>0% gestión de reseñas:</strong> No responden reseñas negativas, perdiendo oportunidades de recuperación</li>
+                <li><strong>Problemas operativos sin resolver:</strong> Quejas recurrentes sobre tiempos de espera sin acciones correctivas visibles</li>
+            </ol>
+        </div>
+
+        <div style="background: #fee; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #e74c3c;">
+            <h3 style="color: #c0392b; margin-bottom: 12px; font-size: 18px;">🚨 Problema crítico de reputación online:</h3>
+            <p style="font-size: 14px; margin-bottom: 8px; color: #721c24;">
+                Il Forno tiene una tasa de respuesta a reseñas del 0% en ambas ubicaciones analizadas:
+            </p>
+            <ul style="margin-left: 20px; color: #721c24; line-height: 1.6;">
+                <li><strong>Parque 93:</strong> Múltiples quejas sobre servicio lento sin respuesta del restaurante</li>
+                <li><strong>Cartagena:</strong> Reseñas de 1 estrella sobre atención terrible, sin gestión alguna</li>
+                <li><strong>Impacto directo:</strong> Los clientes potenciales ven quejas sin resolver y eligen la competencia</li>
+                <li><strong>Oportunidad perdida:</strong> Un sistema de respuestas podría convertir experiencias negativas en positivas</li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 12px; color: #721c24;">
+                <strong>Quick win inmediato:</strong> Implementar protocolo de respuesta a reseñas puede mejorar el rating en 0.2-0.3 estrellas en 30 días.
+            </p>
+        </div>
+
+        <div style="background: #d4edda; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #28a745;">
+            <h3 style="color: #28a745; margin-bottom: 12px; font-size: 18px;">Proyección conservadora - 35 ubicaciones:</h3>
+            <p style="font-size: 14px; margin-bottom: 8px; color: #155724;">
+                Si estas 2 ubicaciones representan el promedio de oportunidad:
+            </p>
+            <ul style="margin-left: 20px; color: #155724; line-height: 1.6;">
+                <li>Revenue adicional total: <strong>$33.8M COP/mes</strong></li>
+                <li>Clientes nuevos totales: <strong>+398/mes</strong></li>
+                <li>Revenue anual incremental: <strong>$405M COP</strong></li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 12px; color: #155724;">
+                Esta proyección solo considera SEO orgánico. Con Google Ads activo (ROAS 4:1), el potencial se duplica.
+            </p>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; border: 2px dashed #e74c3c; border-radius: 8px;">
+            <h3 style="color: #e74c3c; margin-bottom: 10px;">Próximos pasos sugeridos:</h3>
+            <ol style="margin-left: 20px; line-height: 2; color: #2c3e50;">
+                <li><strong>Auditoría completa</strong> de 5 ubicaciones adicionales (mix de ciudades)</li>
+                <li><strong>Piloto en 3 sedes</strong> (Bogotá + ciudad turística + ciudad intermedia)</li>
+                <li><strong>Implementación inmediata:</strong> Sistema de respuesta a reseñas en las 2 ubicaciones analizadas</li>
+                <li><strong>Validar ROI</strong> en 60-90 días antes de rollout completo</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Rank & Roll</strong> - Agencia SEO y SEM especializada en restaurantes</p>
+        <p>Análisis preparado por: Andrés Felipe Albornoz | WhatsApp: +57 302 544 1404</p>
+        <p style="margin-top: 10px; font-size: 11px;">Este es un análisis preliminar basado en datos públicos. La auditoría completa incluye acceso a Google Business Profile, análisis de competencia detallado y plan de implementación técnico.</p>
+    </div>
+</body>
+</html>
